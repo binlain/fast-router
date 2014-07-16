@@ -27,13 +27,10 @@ To match some URL against the route tree:
 
 ```js
 var result = router.parse("/users/tim/lamp");
-
 var result = router.parse("/static/main/js/local/script.js");
-
 var result = router.parse("/");
 ```
 
-While matching 
 
 Result
 ------
