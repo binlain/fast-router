@@ -1,0 +1,31 @@
+{
+    "name": "fast-router",
+    "description": "A fast & simple O(1) URL router for node.js that can be used for almost anything.",
+    "version": "1.0",
+    "homepage": "https://github.com/binlain/fast-router",
+    "keywords": [
+        "url",
+        "router",
+        "tree",
+        "fast"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/binlain/fast-router.git"
+    },
+    "bugs": {
+        "url": "https://github.com/binlain/fast-router/issues"
+    },
+    "author": {
+        "name": "Volafile",
+        "email": "admin@volafile.io",
+        "url": "http://volafile.io/"
+    },
+    "licenses": [
+        {
+            "type": "GPL",
+            "url": "http://www.gnu.org/licenses/"
+        }
+    ],
+    "private": false
+}
