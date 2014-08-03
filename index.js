@@ -17,6 +17,30 @@
 
 var urlp = require('url').parse;
 
+function Elem(index){
+    //Index of this elem in the tree. The root node has 0
+    this.index = index;
+
+    //Paths where this element is a text node
+    this.text = {}; 
+
+    //Next parent node (via 'text' path) that has withKey set. If this is
+    //a child via .withKey, it skips the next parent and uses the parent after
+    //that. Used for quickly walking the tree during search.
+    this._parentKey =  null;
+
+    //Path where this element is a key
+    this.withKey = null; 
+    
+    //Path where this is a wildcard node
+    this.wildcard = null; 
+
+    //If this is an endpoint it has a value and a description of its keys
+    this.value = null;
+    this.keys = [];
+    this.endpoint = false;
+}
+
 function Router(){
     this.root = new Elem(0);
 }
@@ -27,7 +51,7 @@ Router.prototype.addRoute = function(route, value){
     var tokens = tokenizeRoute(route);
     var node = this.root;
     var keys = [];
-    var lastWithKey = null;
+    var parentKeyStack = [];
     for(var i=0; i<tokens.length; i++){
         var token = tokens[i];
         var type = token.type;
@@ -37,15 +61,16 @@ Router.prototype.addRoute = function(route, value){
         } else if(type === 'key'){
             node.withKey = node.withKey || new Elem(i + 1);
             node = node.withKey;
+            parentKeyStack.pop();
             keys.push({name: token.name, index: i});
         } else if(type === 'wildcard'){
             node.wildcard = node.wildcard || new Elem(i + 1);
             node = node.wildcard;
         }
-        node._parentKey = lastWithKey;
+        node._parentKey = parentKeyStack[parentKeyStack.length-1];
         updateKeyInChildren(node);
         if(node.withKey){
-            lastWithKey = node.withKey;
+            parentKeyStack.push(node.withKey);
         }
     }
     node.value = value;
@@ -105,30 +130,6 @@ Router.prototype.parse = function(_url){
 };
 
 module.exports.Router = Router;
-
-function Elem(index){
-    //Index of this elem in the tree. The root node has 0
-    this.index = index;
-
-    //Paths where this element is a text node
-    this.text = {}; 
-
-    //Next parent node (via 'text' path) that has withKey set. If this is
-    //a child via .withKey, it skips the next parent and uses the parent after
-    //that. Used for quickly walking the tree during search.
-    this._parentKey =  null;
-
-    //Path where this element is a key
-    this.withKey = null; 
-    
-    //Path where this is a wildcard node
-    this.wildcard = null; 
-
-    //If this is an endpoint it has a value and a description of its keys
-    this.value = null;
-    this.keys = [];
-    this.endpoint = false;
-}
 
 //Split and tokenize the route 'url' to make it easier to work with it when
 //inserting
