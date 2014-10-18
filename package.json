@@ -1,7 +1,7 @@
 {
     "name": "fast-router",
     "description": "A fast & simple O(1) URL router for node.js that can be used for almost anything.",
-    "version": "1.0",
+    "version": "1.0.1",
     "homepage": "https://github.com/binlain/fast-router",
     "keywords": [
         "url",

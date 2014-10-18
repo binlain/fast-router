@@ -9,7 +9,7 @@ Usage:
 
 ```js
 //Require the module...
-var Router = require("./router.js").Router;
+var Router = require("fast-router").Router;
 //Create a new router
 var router = new Router();
 ```
