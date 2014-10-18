@@ -4,6 +4,8 @@ node.js fast-router
 A fast & simple O(1) URL router for node.js that can be used for almost
 anything.
 
+Runtime: O(1), where *n* is the total number of routes. The runtime is O(n) if you consider *n* the length of your longest route.
+
 Usage:
 -----
 
